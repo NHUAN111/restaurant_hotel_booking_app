@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_hotel_and_restaurants/configs/routes/routes.dart';
 import 'package:my_hotel_and_restaurants/configs/routes/routes_name.dart';
+import 'package:my_hotel_and_restaurants/main_test.dart';
 import 'package:my_hotel_and_restaurants/repository/Area/area_repository.dart';
 import 'package:my_hotel_and_restaurants/repository/Area/implement_area_repository.dart';
 import 'package:my_hotel_and_restaurants/repository/Auth/auth_repository.dart';
@@ -20,7 +21,7 @@ import 'package:my_hotel_and_restaurants/repository/Hotel/hotel_repository.dart'
 import 'package:my_hotel_and_restaurants/repository/Hotel/implement_hotel_repository.dart';
 import 'package:my_hotel_and_restaurants/repository/Order/implement_order_repository.dart';
 import 'package:my_hotel_and_restaurants/repository/Order/order_repository.dart';
-import 'package:my_hotel_and_restaurants/view/splash/splash_screen.dart';
+import 'package:my_hotel_and_restaurants/view/main_screen.dart';
 import 'package:my_hotel_and_restaurants/view_model/area_view_model.dart';
 import 'package:my_hotel_and_restaurants/view_model/banner_view_model.dart';
 import 'package:my_hotel_and_restaurants/view_model/brand_view_model.dart';
@@ -97,7 +98,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(primarySwatch: Colors.blue),
-        home: const SplashScreen(),
+        home: const MainScreen(),
         initialRoute: RoutesName.splash,
         onGenerateRoute: Routes.generateRoute,
       ),

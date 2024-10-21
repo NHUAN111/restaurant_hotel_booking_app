@@ -382,33 +382,35 @@ class _HomePageState extends State<HomePage> {
   Widget hotelTypeButton(
       int index, String hotelString, HotelViewModel hotelViewModel) {
     return GestureDetector(
-        onTap: () {
-          setState(() {
-            indexHotelType = index;
-          });
-          hotelViewModel.fetchHotelListByType(type: index);
-        },
-        child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-            decoration: BoxDecoration(
+      onTap: () {
+        setState(() {
+          indexHotelType = index;
+        });
+        hotelViewModel.fetchHotelListByType(type: index);
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+        decoration: BoxDecoration(
+          color: index == indexHotelType
+              ? Colors.lightBlue.withOpacity(0.4)
+              : Colors.white,
+          borderRadius: BorderRadius.circular(60),
+          border: Border.all(
               color: index == indexHotelType
-                  ? Colors.lightBlue.withOpacity(0.4)
-                  : Colors.white,
-              borderRadius: BorderRadius.circular(60),
-              border: Border.all(
-                  color: index == indexHotelType
-                      ? Colors.blueGrey.withOpacity(0.4)
-                      : Color.fromRGBO(232, 234, 241, 1),
-                  width: 1),
-            ),
-            child: Text(
-              hotelString,
-              style: MyTextStyle.textStyle(
-                  fontSize: 14,
-                  // fontWeight: FontWeight.bold,
-                  color: index == indexHotelType ? Colors.white : Colors.black),
-            )));
+                  ? Colors.blueGrey.withOpacity(0.4)
+                  : Color.fromRGBO(232, 234, 241, 1),
+              width: 1),
+        ),
+        child: Text(
+          hotelString,
+          style: MyTextStyle.textStyle(
+              fontSize: 14,
+              // fontWeight: FontWeight.bold,
+              color: index == indexHotelType ? Colors.white : Colors.black),
+        ),
+      ),
+    );
   }
 
   Widget WidgetHotelByTypeView(HotelModel hotelModel, BuildContext context,
