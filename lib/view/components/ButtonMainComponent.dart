@@ -17,28 +17,35 @@ class ButtonMainComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          primary: buttonColor,
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-            side: BorderSide(
-              color: ColorData.myColor,
+    return Column(
+      children: [
+        SizedBox(
+          height: 6,
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              primary: buttonColor,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(
+                  color: ColorData.myColor,
+                ),
+              ),
+            ),
+            child: Text(
+              buttonText,
+              style: TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),
-        child: Text(
-          buttonText,
-          style: TextStyle(
-            color: textColor,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
+      ],
     );
   }
 }

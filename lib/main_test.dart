@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_hotel_and_restaurants/configs/color.dart';
+import 'package:my_hotel_and_restaurants/configs/routes/routes_name.dart';
 import 'package:my_hotel_and_restaurants/view/components/ButtonSelectComponent.dart';
 import 'package:my_hotel_and_restaurants/view/components/CardHotelComponent.dart';
 import 'package:my_hotel_and_restaurants/view/components/CardOrderHotelComponent.dart';
@@ -338,9 +339,25 @@ class _HotelScreenState extends State<HotelScreen> {
               rooms: 2,
               price: 2.5000000,
               status: "complted",
+              check: true,
               onPressed: () {
                 print("detail");
               },
+            ),
+            CardOrderComponent(
+              hotelName: "Mường thanh Luxury",
+              imageUrl:
+                  'https://muongthanh.com/images/video/original/muong-thanh-luxury-quang-ninh-1_1681902050_1688035221.jpg',
+              orderDate: "08-10-2024/09-10-2024",
+              viewType: "Hướng sông",
+              person: 3,
+              rooms: 2,
+              price: 2.5000000,
+              status: "complted",
+              onPressed: () {
+                print("detail");
+              },
+              check: false,
             ),
             SizedBox(
               height: 100,

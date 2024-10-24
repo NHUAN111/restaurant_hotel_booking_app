@@ -15,6 +15,7 @@ class CardOrderComponent extends StatelessWidget {
   final int rooms;
   final double price;
   final String status;
+  final bool check;
   final VoidCallback onPressed;
 
   const CardOrderComponent({
@@ -28,6 +29,7 @@ class CardOrderComponent extends StatelessWidget {
     required this.price,
     required this.status,
     required this.onPressed,
+    required this.check,
   }) : super(key: key);
 
   @override
@@ -160,7 +162,6 @@ class CardOrderComponent extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Status (e.g., Completed)
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.green[100],
@@ -186,9 +187,37 @@ class CardOrderComponent extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
+              Visibility(
+                visible: check,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      print('Nút thứ hai được nhấn');
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: ColorData.myColor,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        side: BorderSide(
+                          color: ColorData.myColor,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      'Cancel Order',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               // Booking button
               ButtonMainComponent(
-                buttonText: "Completed",
+                buttonText: "Order Detail",
                 buttonColor: Colors.white,
                 textColor: ColorData.myColor,
                 onPressed: () {
