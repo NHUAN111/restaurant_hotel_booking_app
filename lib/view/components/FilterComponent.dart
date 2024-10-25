@@ -1,35 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:my_hotel_and_restaurants/configs/color.dart';
+import 'package:my_hotel_and_restaurants/view/components/ButtonSelectComponent.dart';
 
-class HotelFilterComponent extends StatefulWidget {
+class FilterComponent extends StatefulWidget {
   final String title;
   final List<String> sortOptions;
   final int initialStarRating;
   final String initialHotelType;
   final double initialMinPrice;
   final double initialMaxPrice;
+  final VoidCallback? onTabHotel1; // Nullable callback
+  final VoidCallback? onTabHotel2; // Nullable callback
   final VoidCallback onApply;
+  final bool showPriceRange; // New parameter
+  final bool showHotelButtons; // New parameter
 
-  const HotelFilterComponent({
+  const FilterComponent({
     Key? key,
     required this.title,
     required this.sortOptions,
+    this.onTabHotel1,
+    this.onTabHotel2,
     this.initialStarRating = 4,
     this.initialHotelType = 'Khách sạn',
     this.initialMinPrice = 100,
     this.initialMaxPrice = 500,
     required this.onApply,
+    this.showPriceRange = true,
+    this.showHotelButtons = true,
   }) : super(key: key);
 
   @override
-  _HotelFilterComponentState createState() => _HotelFilterComponentState();
+  _FilterComponentState createState() => _FilterComponentState();
 }
 
-class _HotelFilterComponentState extends State<HotelFilterComponent> {
+class _FilterComponentState extends State<FilterComponent> {
   late String _selectedSort;
   late double _currentMinPrice;
   late double _currentMaxPrice;
   late int _selectedStar;
-  late String _selectedHotelType;
 
   @override
   void initState() {
@@ -38,7 +47,6 @@ class _HotelFilterComponentState extends State<HotelFilterComponent> {
     _currentMinPrice = widget.initialMinPrice;
     _currentMaxPrice = widget.initialMaxPrice;
     _selectedStar = widget.initialStarRating;
-    _selectedHotelType = widget.initialHotelType;
   }
 
   @override
@@ -57,8 +65,8 @@ class _HotelFilterComponentState extends State<HotelFilterComponent> {
             widget.title,
             style: TextStyle(
               fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.pink,
+              fontWeight: FontWeight.w400,
+              color: ColorData.myColor,
             ),
           ),
           SizedBox(height: 16),
@@ -90,7 +98,7 @@ class _HotelFilterComponentState extends State<HotelFilterComponent> {
           ),
           SizedBox(height: 8),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(5, (index) {
               return GestureDetector(
                 onTap: () {
@@ -99,10 +107,11 @@ class _HotelFilterComponentState extends State<HotelFilterComponent> {
                   });
                 },
                 child: Container(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color:
-                        _selectedStar == index + 1 ? Colors.pink : Colors.white,
+                    color: _selectedStar == index + 1
+                        ? ColorData.myColor
+                        : Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color: Colors.grey,
@@ -119,10 +128,13 @@ class _HotelFilterComponentState extends State<HotelFilterComponent> {
                               : Colors.black,
                         ),
                       ),
+                      SizedBox(
+                        width: 2,
+                      ),
                       Icon(
                         Icons.star,
                         color: _selectedStar == index + 1
-                            ? Colors.white
+                            ? Colors.yellow
                             : Colors.grey,
                         size: 16,
                       ),
@@ -133,47 +145,73 @@ class _HotelFilterComponentState extends State<HotelFilterComponent> {
             }),
           ),
           SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildHotelTypeButton('Khách sạn'),
-              _buildHotelTypeButton('Khu nghỉ dưỡng'),
-            ],
-          ),
-          SizedBox(height: 16),
-          Text(
-            'Price Ranges',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          RangeSlider(
-            values: RangeValues(_currentMinPrice, _currentMaxPrice),
-            min: 100,
-            max: 1000,
-            divisions: 10,
-            labels: RangeLabels(
-              '${_currentMinPrice.toStringAsFixed(0)}k',
-              '${_currentMaxPrice.toStringAsFixed(0)}k',
+          if (widget.showHotelButtons) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ButtonSelectComponent(
+                  index: 1,
+                  hotelString: "Khách sạn",
+                  selectedIndex: 1,
+                  onTap: (p0) {
+                    // Use null-aware operator
+                    widget.onTabHotel1?.call();
+                    print("1");
+                  },
+                ),
+                ButtonSelectComponent(
+                  index: 2,
+                  hotelString: "Khu nghỉ dưỡng",
+                  selectedIndex: 2,
+                  onTap: (p0) {
+                    // Use null-aware operator
+                    print("2");
+                    widget.onTabHotel2?.call();
+                  },
+                ),
+              ],
             ),
-            onChanged: (RangeValues values) {
-              setState(() {
-                _currentMinPrice = values.start;
-                _currentMaxPrice = values.end;
-              });
-            },
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('${_currentMinPrice.toStringAsFixed(0)}k'),
-              Text('${_currentMaxPrice.toStringAsFixed(0)}k'),
-            ],
-          ),
+          ],
+          SizedBox(height: 16),
+          if (widget.showPriceRange) ...[
+            Text(
+              'Price Ranges',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            RangeSlider(
+              values: RangeValues(_currentMinPrice, _currentMaxPrice),
+              min: 100,
+              max: 1000,
+              divisions: 10,
+              activeColor: ColorData.myColor,
+              labels: RangeLabels(
+                '${_currentMinPrice.toStringAsFixed(0)}k',
+                '${_currentMaxPrice.toStringAsFixed(0)}k',
+              ),
+              onChanged: (RangeValues values) {
+                setState(() {
+                  _currentMinPrice = values.start;
+                  _currentMaxPrice = values.end;
+                });
+              },
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('${_currentMinPrice.toStringAsFixed(0)}k'),
+                Text('${_currentMaxPrice.toStringAsFixed(0)}k'),
+              ],
+            ),
+          ],
           SizedBox(height: 16),
           ElevatedButton(
-            onPressed: widget.onApply,
+            onPressed: () {
+              widget.onApply(); // Call onApply without null check
+              Navigator.pop(context); // Close the modal when applying
+            },
             style: ElevatedButton.styleFrom(
-              primary: Colors.pink,
+              primary: ColorData.myColor,
               minimumSize: Size(double.infinity, 50),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -185,30 +223,6 @@ class _HotelFilterComponentState extends State<HotelFilterComponent> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildHotelTypeButton(String type) {
-    return OutlinedButton(
-      onPressed: () {
-        setState(() {
-          _selectedHotelType = type;
-        });
-      },
-      style: OutlinedButton.styleFrom(
-        backgroundColor:
-            _selectedHotelType == type ? Colors.pink : Colors.white,
-        side: BorderSide(color: Colors.pink),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-      child: Text(
-        type,
-        style: TextStyle(
-          color: _selectedHotelType == type ? Colors.white : Colors.black,
-        ),
       ),
     );
   }

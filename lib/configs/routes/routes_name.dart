@@ -12,4 +12,5 @@ class RoutesName {
   static const String registerPage = "register_Page";
   static const String searchPage = "Search_Page";
   static const String test = "Simple";
+  static const String searchHotelRestaurant = "searchHotelRestaurant";
 }

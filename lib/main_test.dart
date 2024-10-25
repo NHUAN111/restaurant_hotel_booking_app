@@ -359,6 +359,13 @@ class _HotelScreenState extends State<HotelScreen> {
               },
               check: false,
             ),
+            TextButton(
+                onPressed: () {
+                  //
+                  Navigator.pushNamed(
+                      context, RoutesName.searchHotelRestaurant);
+                },
+                child: Text("search")),
             SizedBox(
               height: 100,
             ),

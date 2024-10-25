@@ -16,6 +16,7 @@ import 'package:my_hotel_and_restaurants/view/product/detail_product.dart';
 import 'package:my_hotel_and_restaurants/view/profile/profile_page.dart';
 import 'package:my_hotel_and_restaurants/view/profile/update_user_page.dart';
 import 'package:my_hotel_and_restaurants/view/search/search_screen.dart';
+import 'package:my_hotel_and_restaurants/view/search_hotel_restaurant/search_hotel_restaurant.dart';
 import 'package:my_hotel_and_restaurants/view/splash/splash_screen.dart';
 
 class Routes {
@@ -104,6 +105,10 @@ class Routes {
       case RoutesName.searchPage:
         return MaterialPageRoute(
           builder: (context) => SearchScreen(),
+        );
+      case RoutesName.searchHotelRestaurant:
+        return MaterialPageRoute(
+          builder: (context) => SearchHotelRestaurantScreen(),
         );
       case RoutesName.test:
         return MaterialPageRoute(
